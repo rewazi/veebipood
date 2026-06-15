@@ -132,7 +132,7 @@ Workflow failid asuvad:
 ```text
 .github/workflows/
 ```
-##Mis juhtub, kui me läheme üle mikroteenustele?
+## Mis juhtub, kui me läheme üle mikroteenustele?
 
 kõik toimib iseseisvalt ja iseseisvalt
 ---
