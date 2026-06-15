@@ -1,18 +1,69 @@
 # Veebipood
 
-<!-- TODO: Kirjelda mis see rakendus on -->
+Veebipood on Node.js ja Expressi põhine REST API e-poe rakendus, mis võimaldab hallata kasutajaid, tooteid ja tellimusi.
 
 ## Tehnoloogiad
 
-<!-- TODO -->
+* Node.js
+* Express.js
+* JavaScript
+* REST API
+* GitHub Actions (CI/CD)
 
 ## Käivitamine
 
-<!-- TODO -->
+### Eeldused
+
+- Node.js 18+
+- npm
+
+### Paigaldamine
+
+```bash
+npm install
+```
+
+### Arendusrežiimis käivitamine
+
+```bash
+npm run dev
+```
+
+### Tavarežiimis käivitamine
+
+```bash
+npm start
+```
+
+Server käivitub vaikimisi aadressil:
+
+```
+http://localhost:3000
+```
+
+---
 
 ## Testikasutajad
 
-<!-- TODO -->
+### Tavaline kasutaja
+
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+### Administraator
+
+```json
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+```
+
+---
 
 ## Teadaolevad vead
 
@@ -27,35 +78,59 @@ Rakenduses on kaks viga mida pead parandama:
 
 | Meetod | URL | Kirjeldus |
 |--------|-----|-----------|
-| POST | /api/users/signup | <!-- TODO --> |
-| POST | /api/users/login | <!-- TODO --> |
-| POST | /api/users/logout | <!-- TODO --> |
-| GET | /api/users/me | <!-- TODO --> |
+| POST | /api/users/signup | Uue kasutaja registreerimine |
+| POST | /api/users/login | Sisselogimine |
+| POST | /api/users/logout | Väljalogimine |
+| GET | /api/users/me | Sisselogitud kasutaja andmed |
 
 ### Tooted
 
 | Meetod | URL | Kirjeldus |
 |--------|-----|-----------|
-| GET | /api/products | <!-- TODO --> |
-| GET | /api/products/:id | <!-- TODO --> |
-| GET | /api/products/search | <!-- TODO --> |
-| GET | /api/products/categories | <!-- TODO --> |
-| GET | /api/products/category/:cat | <!-- TODO --> |
+| GET | /api/products | Kõik tooted |
+| GET | /api/products/:id | Toote detailid |
+| GET | /api/products/search | Toodete otsing |
+| GET | /api/products/categories | Kõik kategooriad |
+| GET | /api/products/category/:cat | Tooted kategooria järgi |
 
 ### Tellimused
 
 | Meetod | URL | Kirjeldus |
 |--------|-----|-----------|
-| POST | /api/orders | <!-- TODO --> |
-| GET | /api/orders | <!-- TODO --> |
-| GET | /api/orders/me | <!-- TODO --> |
-| GET | /api/orders/:id | <!-- TODO --> |
-| PATCH | /api/orders/:id/status | <!-- TODO --> |
+| POST | /api/orders | Uue tellimuse loomine |
+| GET | /api/orders | Kõik tellimused |
+| GET | /api/orders/me | Kasutaja tellimused |
+| GET | /api/orders/:id | Konkreetne tellimus |
+| PATCH | /api/orders/:id/status | Tellimuse staatuse muutmine |
 
 ## Arhitektuur
 
-<!-- TODO: Mis arhitektuur see rakendus kasutab ja miks? -->
+```text
+src/
+├── routes/
+│   ├── users.js
+│   ├── products.js
+│   └── orders.js
+├── models/
+├── middleware/
+└── app.js
+```
 
 ## GitHub Actions
 
-<!-- TODO: Kirjelda mis toimub automaatselt -->
+Projekt kasutab GitHub Actions töövooge automaatseks kontrolliks.
+
+Peamised tegevused:
+
+- sõltuvuste paigaldamine
+- testide käivitamine
+- koodi kvaliteedi kontroll
+- automaatne valideerimine pull requestide puhul
+
+Workflow failid asuvad:
+
+```text
+.github/workflows/
+```
+
+---
