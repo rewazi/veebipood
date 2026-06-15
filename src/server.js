@@ -3,9 +3,9 @@ const cors = require("cors");
 const path = require("path");
 const data = require("./data");
 
-const usersRouter = require("./routes/users");
-const productsRouter = require("./routes/products");
-const ordersRouter = require("./routes/orders");
+const usersRouter = require("./user-service/users");
+const productsRouter = require("./product-service/products");
+const ordersRouter = require("./order-service/orders");
 
 const app = express();
 const PORT = process.env.PORT || 3000;

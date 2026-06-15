@@ -1,9 +1,31 @@
+version: "3.8"
+
 services:
-  app:
+
+  user-service:
     build: .
+    command: node src/user-service/server.js
+    ports:
+      - "3001:3001"
+
+  product-service:
+    build: .
+    command: node src/product-service/server.js
+    ports:
+      - "3002:3002"
+
+  order-service:
+    build: .
+    command: node src/order-service/server.js
+    ports:
+      - "3003:3003"
+
+  api-gateway:
+    build: .
+    command: node src/api-gateway/server.js
     ports:
       - "3000:3000"
-    container_name: veebipood
-    environment:
-      - NODE_ENV=development
-    restart: unless-stopped
+    depends_on:
+      - user-service
+      - product-service
+      - order-service

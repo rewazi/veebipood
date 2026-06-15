@@ -1,210 +1,129 @@
-# Veebipood
 
-Veebipood on Node.js ja Expressi põhine REST API e-poe rakendus, mis võimaldab hallata kasutajaid, tooteid ja tellimusi.
+#  veebipood-mikroteenused
 
-## Tehnoloogiad
+##  Projektikirjeldus
 
-* Node.js
-* Express.js
-* JavaScript
-* REST API
-* GitHub Actions (CI/CD)
+See projekt on **mikroteenustel põhinev veebipoe backend-süsteem**, mis koosneb mitmest iseseisvast teenusest. Kõik teenused suhtlevad omavahel API Gateway kaudu ning töötavad eraldi Docker konteinerites.
 
-## Käivitamine
+---
 
-### Eeldused
+##  Arhitektuur
 
-- Node.js 18+
-- npm
+Süsteem koosneb järgmistest teenustest:
 
-### Paigaldamine
+- **API Gateway** – kõigi päringute keskne sisenemispunkt  
+- **User Service** – kasutajate haldus (registreerimine, autentimine)  
+- **Product Service** – toodete haldus  
+- **Order Service** – tellimuste haldus  
+
+Kõik teenused töötavad iseseisvalt ja suhtlevad omavahel REST API kaudu.
+
+---
+
+##  Tehnoloogiad
+
+- Node.js / Express  
+- Docker & Docker Compose  
+- REST API  
+- JSON  
+
+---
+
+##  Käivitamine
+
+### 1. Klooni projekt
 
 ```bash
-npm install
-```
+git clone https://github.com/Vitali-Kol/veebipood-mikroteenused.git
+cd veebipood-mikroteenused
+````
 
-### Arendusrežiimis käivitamine
-
-```bash
-npm run dev
-```
-
-### Tavarežiimis käivitamine
+### 2. Käivita Dockeriga
 
 ```bash
-npm start
-```
-
-Server käivitub vaikimisi aadressil:
-
-```
-http://localhost:3000
+docker-compose up --build
 ```
 
 ---
 
-## Testikasutajad
+##  Teenused
 
-### Tavaline kasutaja
+Tüüpilised aadressid:
 
-```json
+* API Gateway → [http://localhost:8000](http://localhost:8000)
+* User Service → [http://localhost:8001](http://localhost:8001)
+* Product Service → [http://localhost:8002](http://localhost:8002)
+* Order Service → [http://localhost:8003](http://localhost:8003)
+
+---
+
+##  API näited
+
+###  Kasutaja registreerimine
+
+```http
+POST /register
+Content-Type: application/json
+
 {
-  "email": "user@example.com",
-  "password": "password123"
+  "email": "test@example.com",
+  "password": "123456"
 }
 ```
 
-### Administraator
+###  Sisselogimine
 
-```json
-{
-  "email": "admin@example.com",
-  "password": "admin123"
-}
+```http
+POST /login
+Content-Type: application/json
+```
+
+###  Toodete loetelu
+
+```http
+GET /products
+```
+
+###  Tellimuse loomine
+
+```http
+POST /orders
+Content-Type: application/json
 ```
 
 ---
 
-## Teadaolevad vead
+##  Ideoloogia
 
-Rakenduses on kaks viga mida pead parandama:
+Mikroteenuste arhitektuuri eesmärk:
 
-1. `src/routes/products.js` — otsing ei tööta
-2. `src/routes/orders.js` — tellimuse staatus on vale
+* iga teenus vastutab ainult ühe osa eest
+* süsteem on skaleeritav
+* teenuseid saab eraldi arendada ja muuta
+* ühe teenuse viga ei lõhu kogu süsteemi
 
-## API endpointid
+---
 
-### Kasutajad
+##  Projekti struktuur
 
-| Meetod | URL | Kirjeldus |
-|--------|-----|-----------|
-| POST | /api/users/signup | Uue kasutaja registreerimine |
-| POST | /api/users/login | Sisselogimine |
-| POST | /api/users/logout | Väljalogimine |
-| GET | /api/users/me | Sisselogitud kasutaja andmed |
-
-### Tooted
-
-| Meetod | URL | Kirjeldus |
-|--------|-----|-----------|
-| GET | /api/products | Kõik tooted |
-| GET | /api/products/:id | Toote detailid |
-| GET | /api/products/search | Toodete otsing |
-| GET | /api/products/categories | Kõik kategooriad |
-| GET | /api/products/category/:cat | Tooted kategooria järgi |
-
-### Tellimused
-
-| Meetod | URL | Kirjeldus |
-|--------|-----|-----------|
-| POST | /api/orders | Uue tellimuse loomine |
-| GET | /api/orders | Kõik tellimused |
-| GET | /api/orders/me | Kasutaja tellimused |
-| GET | /api/orders/:id | Konkreetne tellimus |
-| PATCH | /api/orders/:id/status | Tellimuse staatuse muutmine |
-
-## Arhitektuur
-
-```text
-src/
-├── routes/
-│   ├── users.js
-│   ├── products.js
-│   └── orders.js
-├── models/
-├── middleware/
-└── app.js
-```
-
-## GitHub Actions
-
-Projekt kasutab GitHub Actions töövooge automaatseks kontrolliks.
-
-Peamised tegevused:
-
-- sõltuvuste paigaldamine
-- testide käivitamine
-- koodi kvaliteedi kontroll
-- automaatne valideerimine pull requestide puhul
-
-Workflow failid asuvad:
-
-```text
-.github/workflows/
-```
-## Mis juhtub, kui me läheme üle mikroteenustele?
-
-kõik toimib iseseisvalt ja iseseisvalt
-
-# monolit
 ```
 veebipood/
 │
-├── public/                    
-│   ├── index.html             
-│   └── style.css             
-│
-├── src/
-│   ├── routes/                
-│   │   ├── users.js           
-│   │   ├── products.js        
-│   │   └── orders.js          
-│   │
-│   ├── data.js                
-│   ├── server.js             
-│   └── test.js                
-│
-├── .gitignore                 
-├── Dockerfile                
-├── docker-compose.yml         
-├── package.json               
-├── package-lock.json         
-├── README.md                  
-└── ISESEISEV_YLESANNE.md      
-```
-
-# Mikroteenuste arhitektuur
-
-```
-veebipood-microservices/
-│
-├── gateway/                      
-│   ├── server.js
-│   └── package.json
-│
-├── user-service/                 
-│   ├── src/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   └── server.js
-│   └── package.json
-│
-├── product-service/               
-│   ├── src/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   └── server.js
-│   └── package.json
-│
-├── order-service/                 
-│   ├── src/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   └── server.js
-│   └── package.json
-│
-├── frontend/                      
-│   ├── public/
-│   └── src/
-│
-├── docker-compose.yml             
+├── api-gateway/
+├── user-service/
+├── product-service/
+├── order-service/
+├── docker-compose.yml
 └── README.md
 ```
 
+---
 
+##  Märkused
 
+* Kõik teenused töötavad eraldi Docker konteinerites
+* Suhtlus toimub REST API kaudu
+* Gateway suunab kõik päringud õigesse teenusesse
+* Süsteem on mõeldud arendamiseks ja skaleerimiseks
 
 
