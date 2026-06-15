@@ -135,4 +135,76 @@ Workflow failid asuvad:
 ## Mis juhtub, kui me läheme üle mikroteenustele?
 
 kõik toimib iseseisvalt ja iseseisvalt
----
+
+# monolit
+```
+veebipood/
+│
+├── public/                    
+│   ├── index.html             
+│   └── style.css             
+│
+├── src/
+│   ├── routes/                
+│   │   ├── users.js           
+│   │   ├── products.js        
+│   │   └── orders.js          
+│   │
+│   ├── data.js                
+│   ├── server.js             
+│   └── test.js                
+│
+├── .gitignore                 
+├── Dockerfile                
+├── docker-compose.yml         
+├── package.json               
+├── package-lock.json         
+├── README.md                  
+└── ISESEISEV_YLESANNE.md      
+```
+
+# Mikroteenuste arhitektuur
+
+```
+veebipood-microservices/
+│
+├── gateway/                      
+│   ├── server.js
+│   └── package.json
+│
+├── user-service/                 
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   └── server.js
+│   └── package.json
+│
+├── product-service/               
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   └── server.js
+│   └── package.json
+│
+├── order-service/                 
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   └── server.js
+│   └── package.json
+│
+├── frontend/                      
+│   ├── public/
+│   └── src/
+│
+├── docker-compose.yml             
+└── README.md
+```
+
+
+
+
+
